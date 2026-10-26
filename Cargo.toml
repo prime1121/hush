@@ -1,0 +1,27 @@
+[package]
+name = "sao-noise"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+description = "Hush streaming speech enhancement and Pipecat bridge using DeepFilterNet3"
+license = "MIT"
+repository = "https://github.com/saolabsai/hush"
+publish = false
+
+[lib]
+name = "sao_noise"
+
+[[bin]]
+name = "sao-denoise"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+deep_filter = { path = "vendor/libDF", default-features = false, features = ["tract", "default-model"] }
+hound = "3.5"
+ndarray = "0.15"
+serde_json = "1"
+
+[profile.release]
+opt-level = 3

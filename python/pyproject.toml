@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sao-noise"
+version = "0.1.0"
+description = "Hush async streaming client and Pipecat audio filter for DeepFilterNet3"
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+pipecat = ["pipecat-ai>=1.12,<2"]
+
+[project.urls]
+Repository = "https://github.com/saolabsai/hush"
+Issues = "https://github.com/saolabsai/hush/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]

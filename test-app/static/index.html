@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f2ed">
+  <title>Hush Lab</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Hush Lab home"><span class="brand-symbol" aria-hidden="true">sao<span>°</span></span><span class="brand-divider"></span><span class="brand-name">HUSH LAB</span></a>
+      <span class="local-badge"><span aria-hidden="true"></span> VOICE TEST BENCH</span>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div><p class="eyebrow">THE LISTENING ROOM <span>/ 01</span></p><h1 id="page-title">Less noise.<br><span>More conversation.</span></h1><p class="intro-copy">Compare background noise reduction.<br>Record a clip, upload a WAV, or try an artificial sample.</p></div>
+        <div class="signal-art" aria-hidden="true"><div class="signal-label">NOISE IN <span>VOICE OUT</span></div><div class="signal-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="signal-footer">A little clarity changes everything.</div></div>
+      </section>
+
+      <div class="engine-strip"><span class="engine-name"><span class="status-dot" id="engine-dot"></span><span id="engine-status">Connecting to the engine…</span></span><span class="engine-spec">DeepFilterNet3 <span>·</span> Rust inference <span>·</span> 48 kHz</span></div>
+      <div id="error-message" class="error-message" role="alert" hidden></div>
+
+      <section class="workspace" aria-label="Noise suppression test">
+        <section class="source-panel" aria-labelledby="source-heading">
+          <div class="section-heading"><span class="step-number">01</span><h2 id="source-heading">Bring the noise</h2></div>
+          <p class="section-description">Choose a short clip with speech and background noise. The sample is an artificial waveform, not spoken words.</p>
+          <button type="button" class="record-button" id="record-button" disabled><span class="mic-icon" id="record-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="3" width="6" height="12" rx="3" stroke="currentColor" stroke-width="1.7"/><path d="M6 11v1a6 6 0 0 0 12 0v-1M12 18v3M9 21h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span><span><strong id="record-label">Record a clip</strong><span id="record-hint">Use your microphone · up to 60 seconds</span></span><span class="record-action" id="record-action" aria-hidden="true">↗</span></button>
+          <div class="secondary-actions"><label class="button button-secondary upload-label" id="upload-label" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 13V3m0 0L6 7m4-4 4 4M3 12v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Upload WAV<input type="file" id="file-input" accept=".wav,audio/wav,audio/x-wav" disabled></label><button class="button button-secondary" type="button" id="demo-button" disabled><span aria-hidden="true">▷</span>Try a sample</button></div>
+          <p class="input-note">Audio is sent to the app server when you clean it up. Temporary clips are removed after processing.</p>
+          <div class="source-summary" id="source-summary"><span class="summary-mark" aria-hidden="true">♫</span><div><strong id="source-name">No clip selected</strong><span id="source-detail">Your listening test starts here.</span></div><span id="source-check" aria-hidden="true" hidden>✓</span></div>
+
+          <div class="section-heading tuning-heading"><span class="step-number">02</span><h2>Find your balance</h2></div>
+          <div class="slider-heading"><label for="attenuation">Noise reduction limit</label><output id="attenuation-value" for="attenuation">24 dB</output></div>
+          <input type="range" min="0" max="60" value="24" step="1" id="attenuation" aria-describedby="attenuation-help" disabled>
+          <div class="slider-scale" aria-hidden="true"><span>Light touch</span><span>More reduction</span></div>
+          <p id="attenuation-help" class="input-note">Higher values allow stronger noise removal. Listen for the balance that keeps your voice natural.</p>
+          <button type="button" id="enhance-button" class="button button-primary" disabled><span id="enhance-label">Clean up audio</span><span id="enhance-arrow" aria-hidden="true">↗</span></button>
+          <p id="activity" class="activity" role="status" aria-live="polite">Select a clip to get started.</p>
+        </section>
+
+        <section class="listen-panel" aria-labelledby="listen-heading">
+          <div class="listening-top"><div class="section-heading"><span class="step-number">03</span><h2 id="listen-heading">Hear the difference</h2></div><span class="headphones-note"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 11V9a7 7 0 0 1 14 0v2M3 10H2v6h4v-6H3Zm14 0h1v6h-4v-6h3Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Headphones help</span></div>
+          <article class="audio-card original-card"><div class="audio-card-heading"><div><span class="track-label">A / ORIGINAL</span><h3>Room and all.</h3></div><span id="original-duration" class="track-duration">—:—</span></div><div class="waveform-container"><canvas id="original-waveform" aria-label="Original audio waveform" role="img"></canvas><span id="original-placeholder" class="waveform-placeholder">A little noise is a good starting point.</span></div><audio id="original-player" controls preload="metadata" aria-label="Play original audio"></audio></article>
+          <article class="audio-card cleaned-card"><div class="audio-card-heading"><div><span class="track-label">B / CLEANED</span><h3>Let the voice through.</h3></div><span class="result-pill" id="result-pill">WAITING FOR AUDIO</span></div><div class="waveform-container"><canvas id="cleaned-waveform" aria-label="Cleaned audio waveform" role="img"></canvas><span id="cleaned-placeholder" class="waveform-placeholder">Your cleaner conversation will appear here.</span></div><audio id="cleaned-player" controls preload="metadata" aria-label="Play cleaned audio"></audio></article>
+          <div class="comparison-actions"><div class="ab-switch" aria-label="Switch playback at the same position"><span>Compare</span><button type="button" id="switch-original" disabled aria-label="Switch to original audio at the same position">A</button><button type="button" id="switch-cleaned" disabled aria-label="Switch to cleaned audio at the same position">B</button></div><a id="download-link" class="download-link" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 3v10m0 0 4-4m-4 4L6 9M3 14v3h14v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Download cleaned WAV</a></div>
+          <div class="metrics" id="metrics" hidden><div><span>Audio length</span><strong id="metric-duration">—</strong></div><div><span>Inference time</span><strong id="metric-inference">—</strong></div><div><span>Real-time factor</span><strong id="metric-rtf">—</strong></div></div>
+          <p class="metrics-note" id="metrics-note" hidden></p>
+        </section>
+      </section>
+      <footer><span>SAO <span class="footer-slash">/</span> EXPERIMENTS IN CLEARER CONVERSATION</span><span>Pretrained DeepFilterNet3 <span class="footer-dot">·</span> A listening test</span></footer>
+    </main>
+  </div>
+</body>
+</html>
